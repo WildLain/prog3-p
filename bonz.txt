@@ -1,0 +1,8 @@
+Herr;Biffel;Joendhard;75350;Vollradisroda
+Herr;von Senkel; Friedfert;105244;Arensch
+Frau;Gockele;Joghurta;584323;Berensch
+Frau;van Vergadering;Notulen;4587398;Bergeijk
+Frau;Sun;Marizzibel;49242;Jockgrim
+Herr;Wurkenbusch;Heliodor;72500;Visselhoevede
+Herr;Bloed;Hein;32460;Heringshausen
+Frau;Yokeling;Jolante;99324;Huepfingen
