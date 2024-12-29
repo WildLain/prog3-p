@@ -36,8 +36,12 @@ class Messwert:
 # new = sorted(mws)
 # [print(n) for n in new]
 
-mw1 = Messwert("2013-07-15 19:45:02.073782",19.0625)
-mw2 = Messwert("2015-08-21 06:45:01.484487",23.75) 
+# mw1 = Messwert("2013-07-15 19:45:02.073782",19.0625)
+# mw2 = Messwert("2015-08-21 06:45:01.484487",23.75) 
 
-mset = {mw1, mw2}
-print(len(mset))
+# mset = {mw1, mw2}
+# print(len(mset))
+
+
+# test = list([Messwert(line) for line in open('messwerte.csv')])
+# print(test)
