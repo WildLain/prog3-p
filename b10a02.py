@@ -40,7 +40,7 @@ class Messreihe:
         return f"Messreihe({self.list})"
 
 # Instanziierung, kann ohne Parameter erfolgen oder alternativ iterierbares Objekt übergeben
-mr = Messreihe(open('messwerte.csv'))
+# mr = Messreihe(open('messwerte.csv'))
 # print(mr.list)
 
 # Standardfunktion len(mr) liefert Anzahl der Messwerte
@@ -68,9 +68,9 @@ mr = Messreihe(open('messwerte.csv'))
 # for mw in mr:
 #     print(mw)
 
-#  Mit einer Ganzzahl n indiziert soll der n-te Messwert einer Messreihe zurückgeliefert werden
-print("m3[16]:", mr[16])
-print("mr['2019-01-07 15']:", mr['2019-01-07 15'])
+# Mit einer Ganzzahl n indiziert soll der n-te Messwert einer Messreihe zurückgeliefert werden
+# print("m3[16]:", mr[16])
+# print("mr['2019-01-07 15']:", mr['2019-01-07 15'])
 # Slicing wäre doch toll, oder?
-print("mr[5:10]:", mr[5:10])
+# print("mr[5:10]:", mr[5:10])
 
