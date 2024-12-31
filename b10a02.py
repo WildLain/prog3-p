@@ -2,46 +2,38 @@ from b10a01 import Messwert
 
 class Messreihe:
     def __init__(self, iterable=None):
-        self.list = []
+        self._list = []
         if iterable is not None: 
-            self.list = [Messwert(line.strip()) if isinstance(line, str) else line for line in iterable]
-            self.list.sort()
+            self._list = [Messwert(line.strip()) if isinstance(line, str) else line for line in iterable]
+            self._list.sort()
     def __len__(self):
-        return len(self.list)
+        return len(self._list)
     def add(self, *messwerte):
         if len(messwerte) == 0:
             raise ValueError("Es muss mindestens ein Messwert übergeben werden")
         else:
-            [self.list.append(mw) for mw in messwerte if isinstance(mw, Messwert)]
-            self.list.sort()
+            [self._list.append(mw) for mw in messwerte if isinstance(mw, Messwert)]
+            self._list.sort()
     def __add__(self, other):
         nw = Messreihe()
-        nw.list = list(set(self.list + other.list))
-        nw.list.sort()
+        nw._list = list(set(self._list + other.list))
+        nw._list.sort()
         return nw
     def __iter__(self):
-        return iter(self.list)
-    # def __iter__(self):
-    #     self.pos = -1
-    #     return self
-    # def __next__(self):
-    #     self.pos += 1
-    #     if self.pos >= len(self.list):
-    #         raise StopIteration
-    #     return self.list[self.pos]
+        return iter(self._list)
     def __getitem__(self, n):
         if isinstance(n, int):
-            return self.list[n]
+            return self._list[n]
         elif isinstance(n, str):
-            return [mw for mw in self.list if mw.zeitpunkt.startswith(n)]
+            return [mw for mw in self._list if mw.zeitpunkt.startswith(n)]
         elif isinstance(n, slice):
-            return self.list[n]
+            return self._list[n]
     def __repr__(self):
-        return f"Messreihe({self.list})"
+        return f"Messreihe({self._list})"
 
 # Instanziierung, kann ohne Parameter erfolgen oder alternativ iterierbares Objekt übergeben
 # mr = Messreihe(open('messwerte.csv'))
-# print(mr.list)
+# print(mr)
 
 # Standardfunktion len(mr) liefert Anzahl der Messwerte
 # print(len(mr))
