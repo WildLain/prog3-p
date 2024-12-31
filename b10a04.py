@@ -47,11 +47,11 @@ class MessIter:
         return self._mr[self.pos]
     
 # Test geschachteltes Iterieren Test
-mw = Messreihe(open('messwerte.csv'))
-it1, it2 = iter(mw), iter(mw)
-for i in range(10):
-    m1, m2 = next(it1), next(it2)
-    print(m1, m2, "Problem" if m1 != m2 else "OK")
+# mw = Messreihe(open('messwerte.csv'))
+# it1, it2 = iter(mw), iter(mw)
+# for i in range(10):
+#     m1, m2 = next(it1), next(it2)
+#     print(m1, m2, "Problem" if m1 != m2 else "OK")
 
 '''
 Messwert('2013-07-15 16:03:08.260597', 19.875) Messwert('2013-07-15 16:03:08.260597', 19.875) OK
