@@ -1,4 +1,4 @@
-from typing import Any, Self, Iterator
+from typing import Any, Self, Iterator, Union
 
 
 class Messwert:
@@ -24,10 +24,15 @@ class Messwert:
 
 class Messreihe:
     def __init__(self, iterable=None) -> None:
-        self._werte = []
+        self._werte: list[Messwert] = []
         if iterable is not None: 
             self._werte = [Messwert(line.strip()) if isinstance(line, str) else line for line in iterable]
             self._werte.sort()
+    # property braucht man in dem Falle nicht weil die Messreihe an sich ja eigentlich eine Liste aus Messwerten sein soll?
+    # @property
+    # def werte(self) -> list[Messwert]:
+    #     "Messwertliste als Liste von Messwerten: list[Messwerte]"
+    #     return self._werte
     def __len__(self) -> int:
         return len(self._werte)
     def add(self, *messwerte: Messwert) -> None:
@@ -37,6 +42,14 @@ class Messreihe:
             assert(all(isinstance(mw, Messwert) for mw in messwerte))
             [self._werte.append(mw) for mw in messwerte if isinstance(mw, Messwert)]
             self._werte.sort()
+    def addNew(self, messwert) -> None:
+        if isinstance(messwert, Messwert):
+            if messwert.zeitpunkt >= self._werte[-1].zeitpunkt:
+                self.add(messwert)
+            else:
+                raise TypeError
+        else:
+            raise MonotonieVerstossError
     def __add__(self, other: 'Messreihe') -> 'Messreihe':
         assert(isinstance(other, Messreihe))
         nw = Messreihe()
@@ -56,19 +69,38 @@ class Messreihe:
             raise TypeError("Ungültiges Argument")
     def __repr__(self) -> str:
         return f"Messreihe({self._werte})"
-    
-    # Unterklasse von Messreihe
-class ErweiterteMessreihe(Messreihe):
+
+# Unterklasse von ValueError
+class MonotonieVerstossError(ValueError):
     pass
 
-# Testen der Methoden mit der Unterklasse
-mr1 = Messreihe([Messwert("2023-01-01", 19.5), Messwert("2023-01-02", 20.0)])
-mr2 = ErweiterteMessreihe([Messwert("2023-01-03", 19.0), Messwert("2023-01-04", 19.5)])
+mr = Messreihe(open("messwerte.csv"))[:10]
 
-# Testen der add-Methode
-mr1.add(Messwert("2023-01-05", 19.0))
-mr2.add(Messwert("2023-01-06", 19.8))
+# a) die MonotonieVerstossError-Exception selbst zu fangen,
+try:
+    mr.addNew(mr[0])
+except MonotonieVerstossError:
+    print("MonotonieVerstossError gefangen.")
 
-# Testen der __add__-Methode
-mr3 = mr1 + mr2
-print(mr3)
+ # b) stattdessen die eingebaute ValueError-Exception aufzufangen oder
+try:
+    mr.addNew(mr[0])
+except ValueError:
+    print("ValueError gefangen")
+
+# c) die ebenfalls eingebaute Exception RuntimeError.
+try:
+    mr.addNew(mr[0])
+except RuntimeError:
+    print("RuntimeError gefangen.")
+
+# try:
+#     mr.addNew(mr[0])
+# except MonotonieVerstossError:
+#     print("MonotonieVerstossError gefangen.")
+# except ValueError:
+#     print("ValueError gefangen")
+# except RuntimeError:
+#     print("RuntimeError gefangen.")
+
+#Welche funktionieren, und warum?
