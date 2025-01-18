@@ -14,3 +14,4 @@
 # mindestens 2 Ziffern notwendig.
 
 # ^(\+\d{2}[\s/-])[^0](\d{2,}([\s/-]?))*$
+
