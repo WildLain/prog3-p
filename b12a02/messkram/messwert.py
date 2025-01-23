@@ -8,21 +8,19 @@ class Messwert:
         tempRgx = re.compile(r'\b(\d{1,2}\.\d{1,4})\b')
         if(len(args) == 1):
             zeitpunkt_str = str(args[0].split(',')[0].strip('"'))
-            temperatur_str = str(args[0].split(',')[1])
+            temperatur_str = str(args[0].split(',')[1].strip("\n"))
         elif(len(args) == 2):
             zeitpunkt_str = args[0]
             temperatur_str = args[1]
         else:
             raise ValueError("Anzahl der uebergebenen Argumente falsch.")
-        if timeRgx.match(zeitpunkt_str) is not None:
-                zeitpunkt = zeitpunkt_str
+        if timeRgx.match(zeitpunkt_str) is None:
+            raise ZeitpunktFormatError("Zeitpunkt falsch formatiert")
+        elif tempRgx.match(str(temperatur_str)) is None:
+            raise TemperaturFormatError("Temperatur falsch formatiert.")  
         else:
-            raise ZeitpunktFormatError
-        if tempRgx.match(temperatur_str) is not None:
-            temperatur = temperatur_str
-        else:
-            raise TemperaturFormatError  
-        
+            self.zeitpunkt = zeitpunkt_str
+            self.temperatur = temperatur_str
     def __repr__(self) -> str:
         return f"Messwert(\'{self.zeitpunkt}\', {self.temperatur})"
     def __eq__(self, other: Self) -> bool:
@@ -35,16 +33,18 @@ class Messwert:
         return hash((self.zeitpunkt, self.temperatur))
 
 class ZeitpunktFormatError(ValueError):
-    print("Zeitpunkt falsch formatiert")
     pass
 
 class TemperaturFormatError(ValueError):
-    print("Temperatur falsch formatiert.")
     pass
 
-try:
-    mw = Messwert('"2013-07-15 18:45:01.420677",20.375')
-    mw = Messwert('"2013-07-15 19:0013566:01.885987",19.5625hds347')
-    print(mw)
-except(ZeitpunktFormatError, TemperaturFormatError, ValueError) as e:
-    print(e)   
+if __name__ == '__main__':
+    messwerte = []
+    with open('b12a02/messwerteError.csv') as file:
+        lines = file.readlines()
+        for i in range (0,11):
+                try:
+                    print(Messwert(lines[i])) 
+                except(ZeitpunktFormatError, TemperaturFormatError, ValueError) as e:
+                    print(e)
+                    continue
