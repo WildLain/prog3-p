@@ -12,9 +12,15 @@ def auskunft(linie, start, ziel):
     haltestelle = station.get(start)
     haltestellen = []
     while(True):
+        if haltestelle is None:
+            print("Error: Station not found")
+            return
         haltestellen.append(haltestelle[START])
         min += int(haltestelle[MIN])
         haltestelle = station.get(haltestelle[ZIEL])
+        if haltestelle is None:
+            print("Error: Station not found")
+            return
         if ziel in haltestelle[START]:
             haltestellen.append(haltestelle[START])
             break
