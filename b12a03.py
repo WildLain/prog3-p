@@ -50,8 +50,8 @@ for line in lines:
             hour = match.group('stunden')
             hourly_access[hour] += 1
 
-# [print(f'{k} {v}') for k,v in requests.items()]
-print(weird)
+# Zugriffe
+[print(f'{k} {v}') for k,v in requests.items()]
     
 # Verteilung der Grafiken
 print(f'jpgs: {pics_dict['jpg']:2d} pngs: {pics_dict['png']:2d} gifs: {pics_dict['gif']:2d}')
